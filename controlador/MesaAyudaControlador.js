@@ -1,37 +1,36 @@
-const Cliente = require('../../modelo/ClienteModelo');
-const ValidadorCliente = require('./ValidadorCliente');
-const CorreoControlador = require('../CorreoControlador');
+const MesaAyuda= require('../../modelo/MesaAyudaModelo');
+const Validador = require('./Validador');
 
-class ClienteControlador {
+
+class MesaAyudaControlador {
   constructor() {
-    this.validador = new ValidadorCliente();
+    this.validador = new Validador();
   }
 
-  async crearCliente(req, res) {
-    const { t1: doc, t2: nom, t3: tel, t4: email, t5: contra } = req.body;
+  async crearFuncionario(req, res) {
+    const { t1: tipodoc, t2: doc, t3: nombres, t4: llave } = req.body;
 
-    const errores = this.validador.validarTodos(doc, nom, tel, email, contra);
+    const errores = this.validador.validarTodos(tipodoc, doc, nombres, llave);
     if (errores.length > 0) {
       return res.status(400).json({ error: errores });
     }
 
     try {
-      const nuevoCliente = new Cliente({
-        documento: doc,
-        nombres: nom,
-        telefono: tel,
-        correo: email,
-        contrasena: contra
+      const nuevoFuncionario = new MesaAyudaModelo({
+        tipodoc: tipodoc,
+        doc: doc,
+        nombres: nombres,
+        llave: llave
       });
 
-      const resultado = await nuevoCliente.guardar();
+      const resultado = await nuevoFuncionario.guardar();
 
-      // Enviar correo de bienvenida
+      /* // Enviar correo de bienvenida
       try {
        await CorreoControlador.enviarBienvenida(nom, email);
       } catch (correoError) {
         console.warn('Usuario creado, pero el correo no fue enviado:', correoError.message);
-      }
+      } */
 
       return res.status(201).json({
         mensaje: 'Usuario creado con éxito',
@@ -49,4 +48,4 @@ class ClienteControlador {
   }
 }
 
-module.exports = ClienteControlador;
+module.exports = MesaAyudaControlador;
