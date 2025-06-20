@@ -15,6 +15,7 @@ class Conexion {
       }
     });
   }
+
   // Utiliza promise() para convertir la consulta en una promesa
   query(queryString, params) {
     return this.pool.promise().query(queryString, params)
@@ -25,4 +26,5 @@ class Conexion {
       });
   }
 }
+
 module.exports = new Conexion();  // Exporta una instancia única de la clase
