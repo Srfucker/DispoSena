@@ -16,7 +16,7 @@ class MesaAyudaControlador {
     // Desestructurar los datos del cuerpo de la solicitud
     const { t1: tipoDoc, t2: documento, t3: nombres, t4: telefono, t5: correoPersonal, t6: llave } = req.body;
 
-    // Validar los datos de entrada
+    // Validar los datos de entrada.
     // 'errorValidacion' será un string si hay un error, o null si no hay errores.
     const errorValidacion = this.validador.validarTodos(tipoDoc, documento, nombres, telefono, correoPersonal, llave);
     
@@ -36,7 +36,7 @@ class MesaAyudaControlador {
         llave: llave
       });
 
-      // Guardar el nuevo funcionario en la base de datos
+      // Guardar el nuevo funcionario en la base de datos.
       const resultado = await nuevoFuncionario.guardar();
 
       // Enviar correo de bienvenida (comentado, descomentar si se implementa)
