@@ -1,7 +1,7 @@
 const dbService = require('../enlace/Conexion');
 const bcrypt = require('bcrypt');
 
-class MesaAyudaModelo {
+class InstructorModelo {
     constructor({ tipoDoc, documento, nombres, telefono, correoPersonal, llave }) {
         this.tipoDoc = tipoDoc;
         this.documento = documento;
@@ -23,7 +23,7 @@ class MesaAyudaModelo {
             // Hash de la contraseña (llave)
             const hash = await bcrypt.hash(this.llave, 10);
             // Hash del rol (siempre "MesaAyuda" en este caso)
-            const hrol = "MesaAyuda";
+            const hrol = "Instructor";
             const creadop = "Coordinador"; // Definir el creador
 
             const valores = [
@@ -42,7 +42,6 @@ class MesaAyudaModelo {
             const resultado = await dbService.query(query, valores);
             return resultado; // Retorna el resultado de la inserción (ej. insertId)
         } catch (err) {
-            // Manejo de errores específicos, por ejemplo, duplicados
             if (err.code === 'ER_DUP_ENTRY') {
                 throw new Error('Campo Duplicado: Ya existe un registro con estos datos únicos.');
             }
@@ -52,4 +51,4 @@ class MesaAyudaModelo {
     }
 }
 
-module.exports = MesaAyudaModelo;
+module.exports = InstructorModelo;

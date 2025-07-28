@@ -1,8 +1,8 @@
-const MesaAyudaModelo = require('../../modelo/coordinador/MesaAyudaModelo');
+const InstructorModelo = require('../../modelo/coordinador/InstructorModelo');
 const Validador = require('../Validador');
 
 
-class MesaAyudaControlador {
+class InstructorControlador {
     constructor() {
         this.validador = new Validador();
     }
@@ -12,7 +12,7 @@ class MesaAyudaControlador {
      * @param {Object} req - Objeto de solicitud de Express.
      * @param {Object} res - Objeto de respuesta de Express.
      */
-    async crearFuncionario(req, res) {
+    async crearInstructores(req, res) {
         // Desestructurar los datos del cuerpo de la solicitud
         const { t1: tipoDoc, t2: documento, t3: nombres, t4: telefono, t5: correoPersonal, t6: llave } = req.body;
 
@@ -27,7 +27,7 @@ class MesaAyudaControlador {
 
         try {
             // Crear una nueva instancia del modelo de funcionario
-            const nuevoFuncionario = new MesaAyudaModelo({
+            const nuevoFuncionario = new InstructorModelo({
                 tipoDoc: tipoDoc,
                 documento: documento,
                 nombres: nombres,
@@ -38,17 +38,8 @@ class MesaAyudaControlador {
 
             // Guardar el nuevo funcionario en la base de datos
             const resultado = await nuevoFuncionario.guardar();
-
-            // Enviar correo de bienvenida (comentado, descomentar si se implementa)
-            // try {
-            //   await CorreoControlador.enviarBienvenida(nom, email);
-            // } catch (correoError) {
-            //   console.warn('Usuario creado, pero el correo no fue enviado:', correoError.message);
-            // }
-
-            // Enviar una respuesta 201 Created con un mensaje de éxito
             return res.status(201).json({
-                mensaje: 'Funcionario creado con éxito',
+                mensaje: 'Instructor creado con éxito',
                 id: resultado.insertId // Asumiendo que dbService.query devuelve insertId
             });
 
@@ -56,7 +47,7 @@ class MesaAyudaControlador {
             // Manejo de errores específicos del modelo (ej. campo duplicado)
             if (err.message && err.message.includes('Campo Duplicado: ')) {
                 return res.status(409).json({ // 409 Conflict
-                    error: 'Ya existe un usuario con estos datos. Por favor, verifique el tipo de documento y el número de documento.'
+                    error: 'Ya existe un Instructor con estos datos. Por favor, verifique el tipo de documento y el número de documento.'
                 });
             }
             // Manejo de otros errores internos del servidor
@@ -66,4 +57,4 @@ class MesaAyudaControlador {
     }
 }
 
-module.exports = MesaAyudaControlador;
+module.exports = InstructorControlador;

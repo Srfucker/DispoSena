@@ -12,7 +12,7 @@ class CorreoControlador {
   }
 
   async enviarBienvenida(nombres, correo, tasunto) {
-    const asunto = `¡Bienvenido a la plataforma del ${tasunto}!`;
+    const asunto = `¡Bienvenido a la plataforma del ${tassunto}!`;
     const texto = `Hola ${nombres}, gracias por registrarte.\n\nTu usuario para acceder al sistema es: ${correo}`;
     const html = `
       <h2>¡Hola ${nombres}!</h2>

@@ -59,6 +59,11 @@ class Validador {
     return null;
   }
 
+
+  validarDocu(documento) {
+     const ideError = this.verIde(documento);
+    if (ideError) return ideError;
+  }
   /**
    * Verifica si todos los campos están presentes. (Usado para creación/registro)
    * @param {string} tipoDoc
@@ -83,7 +88,7 @@ class Validador {
    */
   verTdoc(td) {
     // Expresión regular para "CC", "CE", "PT", "PP" (mayúsculas, solo 2 caracteres)
-    const tdocRegex = /^(CC|CE|PT|PP)$/;
+    const tdocRegex = /^(TI|CC|CE|PT|PP)$/;
     if (!td || !tdocRegex.test(td)) {
       return 'Tipo de documento inválido. Solo (CC, CE, PT, PP) (solo 2 caracteres).';
     }

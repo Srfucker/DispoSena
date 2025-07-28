@@ -1,8 +1,8 @@
-const MesaAyudaModelo = require('../../modelo/coordinador/MesaAyudaModelo');
+const AdminEduModelo = require('../../modelo/coordinador/AdminEduModelo');
 const Validador = require('../Validador');
 
 
-class MesaAyudaControlador {
+class AdminEduControlador {
     constructor() {
         this.validador = new Validador();
     }
@@ -12,7 +12,7 @@ class MesaAyudaControlador {
      * @param {Object} req - Objeto de solicitud de Express.
      * @param {Object} res - Objeto de respuesta de Express.
      */
-    async crearFuncionario(req, res) {
+    async crearAdmin(req, res) {
         // Desestructurar los datos del cuerpo de la solicitud
         const { t1: tipoDoc, t2: documento, t3: nombres, t4: telefono, t5: correoPersonal, t6: llave } = req.body;
 
@@ -27,7 +27,7 @@ class MesaAyudaControlador {
 
         try {
             // Crear una nueva instancia del modelo de funcionario
-            const nuevoFuncionario = new MesaAyudaModelo({
+            const nuevoFuncionario = new AdminEduModelo({
                 tipoDoc: tipoDoc,
                 documento: documento,
                 nombres: nombres,
@@ -38,17 +38,8 @@ class MesaAyudaControlador {
 
             // Guardar el nuevo funcionario en la base de datos
             const resultado = await nuevoFuncionario.guardar();
-
-            // Enviar correo de bienvenida (comentado, descomentar si se implementa)
-            // try {
-            //   await CorreoControlador.enviarBienvenida(nom, email);
-            // } catch (correoError) {
-            //   console.warn('Usuario creado, pero el correo no fue enviado:', correoError.message);
-            // }
-
-            // Enviar una respuesta 201 Created con un mensaje de éxito
             return res.status(201).json({
-                mensaje: 'Funcionario creado con éxito',
+                mensaje: 'Admin Educativo creado con éxito',
                 id: resultado.insertId // Asumiendo que dbService.query devuelve insertId
             });
 
@@ -56,14 +47,14 @@ class MesaAyudaControlador {
             // Manejo de errores específicos del modelo (ej. campo duplicado)
             if (err.message && err.message.includes('Campo Duplicado: ')) {
                 return res.status(409).json({ // 409 Conflict
-                    error: 'Ya existe un usuario con estos datos. Por favor, verifique el tipo de documento y el número de documento.'
+                    error: 'Ya existe un Admin Educativo con estos datos. Por favor, verifique el tipo de documento y el número de documento.'
                 });
             }
             // Manejo de otros errores internos del servidor
-            console.error('Error en MesaAyudaControlador.crearFuncionario:', err);
+            console.error('Error en AdminEduControlador.crearAdmin:', err);
             return res.status(500).json({ error: 'Error interno del servidor: ' + err.message });
         }
     }
 }
 
-module.exports = MesaAyudaControlador;
+module.exports = AdminEduControlador;
