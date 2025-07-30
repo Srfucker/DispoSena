@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch Servidor.js"
+    "dev": "node init && node --watch Servidor.js"
   },
   "keywords": [],
   "author": "",
