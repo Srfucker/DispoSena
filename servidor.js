@@ -6,7 +6,7 @@ const rutainstru = require('./vista/instructor/InstructoresVista');
 const rutaadminedu = require('./vista/admineducativa/AdminEduVista');
 const rutavigi = require('./vista/vigilantes/VigilanteVista');
 const rutaTic = require('./vista/tic/LoginTic'); 
-const salasVista = require('./view/coordinador/SalasVista');
+const SalasVista = require('./vista/coordinador/SalasVista');
 const rutaEquipoInterno = require('./vista/tic/EquipoInternoRouter');
 const app = express();
 const PORT = process.env.PORT || 4545;
@@ -42,4 +42,8 @@ app.use((err, req, res, next) => {
 // Iniciar el servidor
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
+
+app.get('', (req, res) => {
+  res.json({ mensaje: '¡Backend conectado correctamente!' });
 });
